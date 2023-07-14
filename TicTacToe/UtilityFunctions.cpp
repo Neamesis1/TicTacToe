@@ -28,48 +28,48 @@ std::string user_input(std::string question)
 }
 
 
+std::vector<int> convert_userinput_boardposition(std::string& user_input)
+{
+	switch (stoi(user_input))
+	{
+	case 1:
+		if (user_input == "1") { std::vector<int> pos = { 0, 0 }; return pos; }
+		break;
+	case 2:
+		if (user_input == "2") { std::vector<int> pos = { 0, 1 }; return pos; }
+		break;
+	case 3:
+		if (user_input == "3") { std::vector<int> pos = { 0, 2 }; return pos; }
+		break;
+	case 4:
+		if (user_input == "4") { std::vector<int> pos = { 1, 0 }; return pos; }
+		break;
+	case 5:
+		if (user_input == "5") { std::vector<int> pos = { 1, 1 }; return pos; }
+		break;
+	case 6:
+		if (user_input == "6") { std::vector<int> pos = { 1, 2 }; return pos; }
+		break;
+	case 7:
+		if (user_input == "7") { std::vector<int> pos = { 2, 0 }; return pos; }
+		break;
+	case 8:
+		if (user_input == "8") { std::vector<int> pos = { 2, 1 }; return pos; }
+		break;
+	case 9:
+		if (user_input == "9") { std::vector<int> pos = { 2, 2 }; return pos; }
+	}
+}
+
+
 void board_input(std::string user_in, std::string input)
 {
 	std::transform(input.begin(), input.end(), input.begin(), ::toupper);
 
-	switch (stoi(user_in))
-	{
-	case 1:
-		if (user_in == "1" and Board[0][0] == " ") { Board[0][0] = input; }
-		else { print("Cannot input on top of an X or an O"); }
-		break;
-	case 2:
-		if (user_in == "2" and Board[0][1] == " ") { Board[0][1] = input; }
-		else { print("Cannot input on top of an X or an O"); }
-		break;
-	case 3:
-		if (user_in == "3" and Board[0][2] == " ") { Board[0][2] = input; }
-		else { print("Cannot input on top of an X or an O"); }
-		break;
-	case 4:
-		if (user_in == "4" and Board[1][0] == " ") { Board[1][0] = input; }
-		else { print("Cannot input on top of an X or an O"); }
-		break;
-	case 5:
-		if (user_in == "5" and Board[1][1] == " ") { Board[1][1] = input; }
-		else { print("Cannot input on top of an X or an O"); }
-		break;
-	case 6:
-		if (user_in == "6" and Board[1][2] == " ") { Board[1][2] = input; }
-		else { print("Cannot input on top of an X or an O"); }
-		break;
-	case 7:
-		if (user_in == "7" and Board[2][0] == " ") { Board[2][0] = input; }
-		else { print("Cannot input on top of an X or an O"); }
-		break;
-	case 8:
-		if (user_in == "8" and Board[2][1] == " ") { Board[2][1] = input; }
-		else { print("Cannot input on top of an X or an O"); }
-		break;
-	case 9:
-		if (user_in == "9" and Board[2][2] == " ") { Board[2][2] = input; }
-		else { print("Cannot input on top of an X or an O"); }
-	}
+	int i = convert_userinput_boardposition(user_in)[0];
+	int j = convert_userinput_boardposition(user_in)[1];
+
+	Board[i][j] = input;
 }
 
 
@@ -183,7 +183,7 @@ int loop_diagonals(std::string& user1_input, std::string& user2_input)
 	return 0;
 }
 
-
+// TODO: Fix TWO Bugs, AI not working correctly
 void AI_input_X_or_O(std::string& user1_input, std::string& user2_input)
 {
 	std::vector<int> empty_spots;
@@ -193,8 +193,8 @@ void AI_input_X_or_O(std::string& user1_input, std::string& user2_input)
 	{
 		for (int j = 0; i < 3; i++)
 		{
-			empty++;
-			if ((Board[i][j] != user1_input) || (Board[i][j] != user2_input)) { empty_spots.push_back(empty); }
+			empty++; // Bug 1 probably somewhere around these loops
+			if ((Board[i][j] != user1_input) && (Board[i][j] != user2_input)) { empty_spots.push_back(empty); }
 		}
 	}
 
@@ -207,7 +207,8 @@ void AI_input_X_or_O(std::string& user1_input, std::string& user2_input)
 	std::default_random_engine rand;
 	std::uniform_int_distribution<int> distribution(1, 9);
 
-	std::string input = std::format("{}", distribution(rand));
+	std::string input = std::format("{}", distribution(rand)); // Bug 2 here, random input is always 8
+	std::cout << input << '\n';
 	board_input(input, user2_input);
 }
 

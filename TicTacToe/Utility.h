@@ -9,6 +9,8 @@ void print(std::string msg);
 
 std::string user_input(std::string question);
 
+std::vector<int> convert_userinput_boardposition(std::string& user_input);
+
 void board_input(std::string user_in, std::string input);
 
 void show_board();
