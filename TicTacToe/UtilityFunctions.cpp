@@ -184,7 +184,7 @@ int loop_diagonals(std::string& user1_input, std::string& user2_input)
 }
 
 
-void input_X_or_O(std::string& user1_input, std::string& user2_input)
+void AI_input_X_or_O(std::string& user1_input, std::string& user2_input)
 {
 	std::vector<int> empty_spots;
 	int empty = 0;
@@ -232,7 +232,7 @@ void AI(std::string user_input)
 
 	if (loop_diagonals(user1_input, user2_input)) { return; }
 
-	input_X_or_O(user1_input, user2_input);
+	AI_input_X_or_O(user1_input, user2_input);
 }
 
 

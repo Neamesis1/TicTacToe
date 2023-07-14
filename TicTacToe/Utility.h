@@ -20,7 +20,7 @@ int loop_columns(int num_row, int num_col, int empty_pos, std::string& user1_inp
 
 int loop_diagonals(std::string& user1_input, std::string& user2_input);
 
-void input_X_or_O(std::string& user1_input, std::string& user2_input);
+void AI_input_X_or_O(std::string& user1_input, std::string& user2_input);
 
 void AI(std::string user_input);
 
