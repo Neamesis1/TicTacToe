@@ -8,6 +8,11 @@
 
 extern std::string Board[3][3];
 
+std::default_random_engine random_eng;
+std::uniform_int_distribution<int> distribution(1, 9);
+
+int first_random_val = distribution(random_eng);
+
 // Fundamental functions:
 
 void print(std::string msg)
@@ -59,6 +64,9 @@ std::vector<int> convert_userinput_boardposition(std::string& user_input)
 	case 9:
 		if (user_input == "9") { std::vector<int> pos = { 2, 2 }; return pos; }
 	}
+
+	std::vector<int> default_vec = { -1, -1 };
+	return default_vec;
 }
 
 
@@ -183,7 +191,7 @@ int loop_diagonals(std::string& user1_input, std::string& user2_input)
 	return 0;
 }
 
-// TODO: Fix TWO Bugs, AI not working correctly
+
 void AI_input_X_or_O(std::string& user1_input, std::string& user2_input)
 {
 	std::vector<int> empty_spots;
@@ -191,9 +199,9 @@ void AI_input_X_or_O(std::string& user1_input, std::string& user2_input)
 
 	for (int i = 0; i < 3; i++)
 	{
-		for (int j = 0; i < 3; i++)
+		for (int j = 0; j < 3; j++)
 		{
-			empty++; // Bug 1 probably somewhere around these loops
+			empty++;
 			if ((Board[i][j] != user1_input) && (Board[i][j] != user2_input)) { empty_spots.push_back(empty); }
 		}
 	}
@@ -201,14 +209,10 @@ void AI_input_X_or_O(std::string& user1_input, std::string& user2_input)
 	for (int i : empty_spots)
 	{
 		std::string input = std::format("{}", i);
-		if (i == 5) { board_input(input, user2_input); }
+		if (i == 5) { board_input(input, user2_input); return; }
 	}
 
-	std::default_random_engine rand;
-	std::uniform_int_distribution<int> distribution(1, 9);
-
-	std::string input = std::format("{}", distribution(rand)); // Bug 2 here, random input is always 8
-	std::cout << input << '\n';
+	std::string input = std::format("{}", distribution(random_eng));
 	board_input(input, user2_input);
 }
 
@@ -296,6 +300,7 @@ bool win_or_lose()
 
 	// 2nd diagonal
 	number_of_X = 0;
+	number_of_O = 0;
 
 	if (Board[2][0] == "X") { number_of_X++; }
 	else if (Board[2][0] == "O") { number_of_O++; }
