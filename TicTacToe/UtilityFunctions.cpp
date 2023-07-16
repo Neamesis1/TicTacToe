@@ -15,7 +15,8 @@ int first_random_val = distribution(random_eng);
 
 // Fundamental functions:
 
-void print(std::string msg)
+template<typename T>
+void print(T msg)
 {
 	std::cout << msg << '\n';
 }

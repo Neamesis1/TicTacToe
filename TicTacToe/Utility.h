@@ -5,7 +5,8 @@
 #include <tuple>
 
 // Fundamental Functions
-void print(std::string msg);
+template<typename T>
+void print(T msg);
 
 std::string user_input(std::string question);
 
